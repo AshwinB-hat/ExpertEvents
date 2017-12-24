@@ -1,0 +1,21 @@
+<% include partials/header %>
+
+<div class="container">
+	<div class="row">
+	
+	<% students.forEach(function(student){ %>
+	<div class="col-md-3 col-sm-6">
+		<div class="thumbnail">
+			<img alt="not available" src="<%= student.image %>" style="width: 200px; height:200px;">
+					<div class="caption">
+						<h4><%= student.name %></h4>
+					</div>
+					<a href="/students/<%= student._id %>">
+					<button type="button"  class="btn btn-primary" >More Info</button></a>
+		</div>
+	</div>
+	<% }); %>
+	</div>
+</div>
+
+<% include partials/footer %>

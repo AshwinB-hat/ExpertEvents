@@ -1,0 +1,32 @@
+<% include partials/header %>
+<div class="container-fluid">
+<div class="row">
+	<div class="col-md-4 col-sm-1">
+	</div>
+	<div class="col-md-8 col-sm-3">
+			
+			
+		
+		<div class="thumbnail" >
+			<img class ="img-responsive" src="<%= teacher.image %>">
+			<h1><%= teacher.name %></h1>
+			<p><%= teacher.description %></p>
+		
+		<% if(currentUser){ %>
+		<a href="/teachers/<%= teacher._id %>/edit"><button class="btn btn-warning">Edit</button></a>
+		<form style="display:inline;" action="/teachers/<%=teacher._id %>?_method=DELETE" method="POST">
+			<button class = "btn btn-danger">Delete</button>
+		</form>
+
+		<% } %>
+		
+
+
+		</div>
+		<div class="row"></div>
+	
+	</div>
+</div>
+</div>
+
+<% include partials/footer %>
