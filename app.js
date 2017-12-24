@@ -5,6 +5,7 @@ var express 		= require("express"),
 	mongoose		= require("mongoose"),
 	passport 		= require("passport"),
 	LocalStrategy 	= require("passport-local"),
+	GoogleStrategy  = require('passport-google-oauth20').Strategy,
 	flash 			= require ('connect-flash'),
 	methodOverride 	= require("method-override"),
 	path 			= require('path'),
@@ -27,8 +28,30 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+
+//google authorisation
+/*passport.use(new GoogleStrategy({
+    clientID: 399712282935-38kq4fbpkaef87bt1ntbikujktt0mv37.apps.googleusercontent.com,
+    clientSecret: tKIzq1ICldtsMrX4OBjYQugv,
+    callbackURL: "http://localhost:3000/login/google/return"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));*/
+
+//passport.serializeUser(User.serializeUser());
+/*passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+//passport.deserializeUser(User.deserializeUser());
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+*/
+
 
 app.set("view engine","ejs");
 
