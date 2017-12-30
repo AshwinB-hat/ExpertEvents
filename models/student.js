@@ -4,6 +4,8 @@ var studentSchema = new mongoose.Schema({
 	name:String,
 	image:String,
 	school:String,
+	mobile:Number,
+	altnumber:Number,
 	description:String,
 	courses:[String],
 	teachers:[{

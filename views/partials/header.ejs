@@ -3,6 +3,7 @@
 <head>
 	<title>ExpertEvents</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!--<link rel="stylesheet" type="text/css" href="styles.css"> -->
 </head>
 <body>
 <div class="container-fluid topFiller">
@@ -21,8 +22,14 @@
 					<% } %>
 					<li><a href="/students">Students</a></li>
 					<li><a href="/teachers">Teachers</a></li>
+					<% if(!currentUser){ %>
+					<li><a href="/login">Login</a></li>
+					<% } %>
+					<% if(currentUser){ %>
 					<li><a href="/teachers/new"><span class="glyphicon glyphicon-plus"></span>Teachers</a></li>
 					<li><a href="/students/new"><span class="glyphicon glyphicon-plus"></span>Students</a></li>
+					<li><a href="/logout">Logout</a></li>
+					<% } %>
 				</ul>
 			
 	</div>

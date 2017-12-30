@@ -15,7 +15,7 @@ var express 		= require("express"),
 
 mongoose.connect("mongodb://localhost/ExpertEvent");
 
-app.use(express.static(path.join(__dirname,"public")));
+app.use(express.static(path.join(__dirname,'public/style')));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 //passport configuration
@@ -42,11 +42,12 @@ passport.use(new LocalStrategy(User.authenticate()));
   }
 ));*/
 
-//passport.serializeUser(User.serializeUser());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 /*passport.serializeUser(function(user, cb) {
   cb(null, user);
 });
-//passport.deserializeUser(User.deserializeUser());
 passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
@@ -92,16 +93,6 @@ app.get("/teachers", function(req,res){
 	
 });
 
-app.get("/students/:id/edit",isLoggedIn,function(req,res){
-	//is user logged in?
-	
-		Student.findById(req.params.id, function(err,student){
-		
-				res.render("student_edit",{student:student});
-		
-			});
-		});
-
 app.get("/teachers/:id/edit",isLoggedIn,function(req,res){
 	//is user logged in?
 	
@@ -112,13 +103,25 @@ app.get("/teachers/:id/edit",isLoggedIn,function(req,res){
 			});
 		});
 
+app.get("/students/:id/edit",isLoggedIn,function(req,res){
+	//is user logged in?
+	
+		Student.findById(req.params.id, function(err,student){
+		
+				res.render("student_edit",{student:student});
+		
+			});
+		});
+
+
+
 app.post("/students",function(req,res){
 	Student.create(req.body.student,function(err,foundStudent){
 		if(err){
 			console.log(err);
 		}
 		else{
-			res.redirect("/student");
+			res.redirect("/students");
 		}
 	});
 });
@@ -180,7 +183,7 @@ app.get("/teachers/:id",function(req,res){
 			console.log(err);
 		}
 		else{
-			res.render("student_detail",{student:found});
+			res.render("teacher_detail",{teacher:found});
 		}
 	});
 });
@@ -196,20 +199,20 @@ app.get("/students/:id",function(req,res){
 	});
 });
 
-
-
-
-app.delete("students/:id", function(req,res){
-		Student.findByIdAndRemove(req.params.id,function(err){
-		res.redirect("/students");
-	});
-});
-
 app.delete("/teachers/:id",function(req,res){
 	Teacher.findByIdAndRemove(req.params.id,function(err){
 		res.redirect("/teachers");
 	});
 });
+
+
+app.delete("/students/:id", function(req,res){
+		Student.findByIdAndRemove(req.params.id,function(err){
+		res.redirect("/students");
+	});
+});
+
+
 
 
 
@@ -246,6 +249,11 @@ app.post('/register',function(req,res){
 			res.redirect("/students");
 		});
 	});
+});
+app.get("/logout",function(req,res){
+	req.logout();
+	req.flash("success","succesfully Logged out!");
+	res.redirect("/");
 });
 
 
